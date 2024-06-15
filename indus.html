@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+.container {
+  display: flex;
+  height: 100%;
+}
+
+.left-half {
+  flex: 1 0 40%;
+  display: flex;
+  align-items: center; /* Center content vertically */
+  justify-content: center; /* Center content horizontally */
+ /* border: 1px solid #ddd; Optional: Add border for separation */
+}
+
+.right-half {
+  flex:1 0 60% ;
+  display: flex;
+  align-items: center; /* Center content vertically */
+  justify-content: center; /* Center content horizontally */
+ /* border: 1px solid #ddd; Optional: Add border for separation */
+}
+
+
+
+.left-half {
+  
+  background-color: white; /* Optional: Background color for the left half */
+}
+
+.right-half {
+  background-color: white; /* Optional: Background color for the right half */
+  display: flex;
+  justify-content: space-between;
+}
+
+.carousel-container {
+  width: 100%; /* Each carousel takes full width of the right half */
+  height: 60%; /* Each carousel takes half of the height */
+  overflow: hidden;
+  position: relative;
+}
+
+.carousel-wrapper {
+  display: flex;
+  flex-direction: column;
+  animation: scroll-up 9s  linear infinite;
+}
+
+.carousel-wrapper.reverse {
+  animation: scroll-down 9s linear infinite;
+}
+
+
+@keyframes scroll-up {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(calc(-100% - 100px)); }
+}
+
+@keyframes scroll-down {
+  0% { transform: translateY(calc(-100% - 100px)); }
+  100% { transform: translateY(0); }
+}
+
+
+.carousel-item {
+  height: 65px; /* Adjust the item height as needed */
+  width: 400px;
+  display: flex;
+  align-items: center;
+  /*justify-content: center;*/
+  background-color: white; /* Adjust the background color as needed */
+  border-bottom: 1px solid #ddd; /* Optional: Add a border for better separation */
+  border: 2px solid #ddd;
+  border-radius: 90px;
+  box-shadow: 0 2px 4px rgba(0.1, 0, 0, 0.1); /* Optional: Add shadow for better separation */
+  margin: 20px 0; /* Add margin for spacing */
+  padding: 5px 10px;
+  font-size: 20px;
+}
+
+h1{
+  font-size:52px;
+  font-weight: bolder;
+}
+
+.icon-img {
+    width: 20px; /* Adjust width as needed */
+    height: auto; /* Maintain aspect ratio */
+    margin-right: 10px; /* Adjust margin between image and text */
+  }
+
+  .item-text {
+    font-weight: bold; /* Make text thicker */
+  }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-half">
+           <pre><h1>Industries we <br>Serve</h1><pre style="font-size: 20px;">Dedicated to growing with businesses.</pre>
+        </div>
+        <div class="right-half">
+          <!-- First Carousel -->
+          <div class="carousel-container">
+            <div class="carousel-wrapper">
+                <div class="carousel-item"><img src="laptop.png" alt="" class="icon-img">  EdTech</div>
+                <div class="carousel-item"><img src="dumbbell.png" alt="" class="icon-img"> Personal care & Fitness</div>
+                <div class="carousel-item"><img src="rotation_5956823.png" alt="" class="icon-img">D2C</div>
+                <div class="carousel-item"><img src="money_1853213.png" alt="" class="icon-img">Health Tech</div>
+                <div class="carousel-item"><img src="b2b_4224619.png" alt="" class="icon-img">B2B</div>
+                <div class="carousel-item"><img src="bank_1170714.png" alt="" class="icon-img">FinTech</div>
+            </div>
+          </div>
+
+          <!-- Second Carousel -->
+          <div class="carousel-container">
+            <div class="carousel-wrapper reverse">
+                <div class="carousel-item"><img src="bank_1170714.png" alt="" class="icon-img">FinTech</div> 
+                <div class="carousel-item"><img src="laptop.png" alt="" class="icon-img">EdTech</div>
+                <div class="carousel-item"><img src="car_2382181.png" alt="" class="icon-img">Sports</div>
+                <div class="carousel-item"><img src="shopping-cart_153004.png" alt="" class="icon-img">E-commerce</div>
+                <div class="carousel-item"><img src="Saas.png" alt="" class="icon-img">SaaS</div>
+                <div class="carousel-item"><img src="exchange_677179.png" alt="" class="icon-img">B2C</div>
+            </div>
+          </div>
+        </div>
+      </div>
+</body>
+<script>
+    window.addEventListener('load', function() {
+      const wrappers = document.querySelectorAll('.carousel-wrapper');
+      wrappers.forEach(wrapper => {
+        const items = Array.from(wrapper.children);
+
+        // Clone the items to create the continuous effect
+        items.forEach(item => {
+          const clone = item.cloneNode(true);
+          wrapper.appendChild(clone);
+        });
+
+        // Adjust the animation duration and speed
+        const totalHeight = wrapper.scrollHeight;
+        const itemHeight = items[0].offsetHeight;
+        const itemCount = items.length;
+
+        // Adjust the keyframes dynamically
+        const styleSheet = document.styleSheets[0];
+        styleSheet.insertRule(`
+          @keyframes scroll-up {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(calc(-${itemHeight * itemCount}px)); }
+          }
+        `, styleSheet.cssRules.length);
+        
+        styleSheet.insertRule(`
+          @keyframes scroll-down {
+            0% { transform: translateY(calc(-${itemHeight * itemCount}px)); }
+            100% { transform: translateY(0); }
+          }
+        `, styleSheet.cssRules.length);
+      });
+    });
+  </script>
+</html>
